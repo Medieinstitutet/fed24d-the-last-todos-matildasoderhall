@@ -14,7 +14,7 @@ export const TodoPresentation = ({todo, handleChange, removeTodo}: TodoPresentai
         <li className="rounded-md border border-gray-300 bg-lime-100 p-4">
             <article className="flex flex-col gap-2">
                 <div className="flex justify-end">
-                    <button className="bg-gray-100 px-3 py-1 rounded" onClick={() => removeTodo(todo.id)}>X</button>
+                    <button className="bg-gray-50 px-3 py-1 rounded" onClick={() => removeTodo(todo.id)}>X</button>
                 </div>
                 <div className="flex items-center gap-2">
                     <input type="checkbox" checked={todo.done} onChange={(e) => handleChange({...todo, done: e.target.checked})}/>

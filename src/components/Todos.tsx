@@ -3,6 +3,7 @@ import { Todo } from "../models/todo"
 import { TodoPresentation } from "./TodoPresentation"
 import { FilterTodos } from "./FilterTodos";
 import type { Filter } from "../models/filter";
+import { AddTodo } from "./AddTodo";
 
 export const Todos = () => {
 
@@ -54,5 +55,6 @@ export const Todos = () => {
                 />
             ))}
         </ul>
+        <AddTodo addTodo={(todo) => setTodos(prev => [...prev, todo])} />
     </>
 }
