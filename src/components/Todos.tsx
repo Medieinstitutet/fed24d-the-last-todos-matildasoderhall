@@ -34,7 +34,7 @@ export const Todos = () => {
 
     console.log(todos);
     return <>
-        <ul>
+        <ul className="grid grid-cols-5 gap-4">
             {todos.map((t) => (<TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>))}
         </ul>
     </>
