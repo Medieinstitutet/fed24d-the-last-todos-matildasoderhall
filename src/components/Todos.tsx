@@ -9,8 +9,8 @@ export const Todos = () => {
     const [todos, setTodos] = useState<Todo[]>(() => {
         const stored = localStorage.getItem("todos");
         return stored 
-        ? JSON.parse(stored).map((t: { content: string; done: boolean; id: number }) =>
-            new Todo(t.content, t.done, t.id)) 
+        ? JSON.parse(stored).map((t: { content: string; done: boolean; deadline: string; id: number}) =>
+            new Todo(t.content, t.done, t.deadline, t.id)) 
         : [
             new Todo("Clean"),
             new Todo("Cook dinner"),

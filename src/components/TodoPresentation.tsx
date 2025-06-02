@@ -20,6 +20,9 @@ export const TodoPresentation = ({todo, handleChange, removeTodo}: TodoPresentai
                     <input type="checkbox" checked={todo.done} onChange={(e) => handleChange({...todo, done: e.target.checked})}/>
                     <h2 className={`text-lg ${todo.done ? "line-through text-gray-500" : ""}`}>{todo.content}</h2>
                 </div>
+                {todo.deadline && (
+                    <p className="flex">Deadline: {new Date(todo.deadline).toLocaleDateString()}</p>
+                )}  
             </article>
         </li>
     </>
