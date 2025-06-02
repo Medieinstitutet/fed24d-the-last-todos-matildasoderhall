@@ -3,7 +3,8 @@ export class Todo {
     constructor(
         public content: string,
         public done: boolean = false,
+        id?: number
     ){
-        this.id = Date.now() + Math.floor(Math.random() * 10000);
+        this.id = id ?? Date.now() + Math.floor(Math.random() * 10000);
     }
 }
