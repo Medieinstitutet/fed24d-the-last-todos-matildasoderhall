@@ -28,11 +28,14 @@ export const Todos = () => {
         );
     };
 
+    const removeTodo = (id: number) => {
+        setTodos(todos.filter((t) => t.id !== id));
+    };
+
     console.log(todos);
     return <>
         <ul>
-            {todos.map((t) => (<TodoPresentation handleChange={handleChange} key={t.id} todo={t}/>))}
+            {todos.map((t) => (<TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>))}
         </ul>
-        
     </>
 }
