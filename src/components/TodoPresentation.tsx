@@ -18,7 +18,7 @@ export const TodoPresentation = ({todo, handleChange, removeTodo}: TodoPresentai
                 </div>
                 <div className="flex items-center gap-2">
                     <input type="checkbox" checked={todo.done} onChange={(e) => handleChange({...todo, done: e.target.checked})}/>
-                    <h2>{todo.content}</h2>
+                    <h2 className={`text-lg ${todo.done ? "line-through text-gray-500" : ""}`}>{todo.content}</h2>
                 </div>
             </article>
         </li>
