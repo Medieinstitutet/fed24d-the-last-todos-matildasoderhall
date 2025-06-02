@@ -6,8 +6,4 @@ export class Todo {
     ){
         this.id = Date.now() + Math.floor(Math.random() * 10000);
     }
-
-    toggleDone() {
-        this.done = !this.done;
-    }
 }
