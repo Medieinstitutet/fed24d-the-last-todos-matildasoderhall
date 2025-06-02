@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { Todo } from "../models/todo"
 import { TodoPresentation } from "./TodoPresentation"
+import { FilterTodos } from "./FilterTodos";
+import type { Filter } from "../models/filter";
 
 export const Todos = () => {
 
@@ -18,6 +20,14 @@ export const Todos = () => {
         ];
     });
 
+    const [filter, setFilter] = useState<Filter>("all");
+
+    const filteredTodos = todos.filter(todo => {
+        if (filter === "active") return !todo.done;
+        if (filter === "done") return todo.done;
+        return true;
+    });
+
     useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
     }, [todos]);
@@ -32,10 +42,17 @@ export const Todos = () => {
         setTodos(todos.filter((t) => t.id !== id));
     };
 
-    console.log(todos);
     return <>
+        <FilterTodos setFilter={setFilter} currentFilter={filter} />
         <ul className="grid grid-cols-5 gap-4">
-            {todos.map((t) => (<TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>))}
+            {filteredTodos.map((t) => (
+                <TodoPresentation 
+                removeTodo={removeTodo} 
+                handleChange={handleChange} 
+                key={t.id} 
+                todo={t}
+                />
+            ))}
         </ul>
     </>
 }
