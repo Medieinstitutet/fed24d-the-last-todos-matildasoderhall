@@ -4,7 +4,7 @@ export class Todo {
         public content: string,
         public done: boolean = false,
     ){
-        this.id = Date.now();
+        this.id = Date.now() + Math.floor(Math.random() * 10000);
     }
 
     toggleDone() {
