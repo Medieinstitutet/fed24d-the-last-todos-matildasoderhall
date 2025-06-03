@@ -4,8 +4,8 @@ import { TodoPresentation } from "./TodoPresentation"
 import { FilterTodos } from "./FilterTodos";
 import type { Filter } from "../models/filter";
 import { AddTodo } from "./AddTodo";
-import { SortTodos } from "./SortTodos";
-import type { SortValue } from "../models/sort";
+
+  
 
 export const Todos = () => {
     const defaultTodos = [
@@ -16,22 +16,15 @@ export const Todos = () => {
         new Todo("Book trip"),
     ]
     
-    const [todos, setTodos] = useState<Todo[]>( JSON.parse(localStorage.getItem("todos") || JSON.stringify(defaultTodos)));
+    const [todos, setTodos] = useState<Todo[]>( JSON.parse(localStorage.getItem("todos") || JSON.stringify(defaultTodos)) 
+    );
 
     const [filter, setFilter] = useState<Filter>("all");
-
-    const [sortBy, setSortBy] = useState<SortValue>("alphabetical");
 
     const filteredTodos = todos.filter(todo => {
         if (filter === "active") return !todo.done;
         if (filter === "done") return todo.done;
         return true;
-    });
-
-    const sortedTodos = [...filteredTodos].sort((a, b) => {
-        if (sortBy === "alphabetical") return a.content.localeCompare(b.content);
-        if (sortBy === "deadline") return (a.deadline ?? "").localeCompare(b.deadline ?? "");
-        return 0;
     });
 
     const handleChange = (updated: Todo) => {
@@ -47,11 +40,15 @@ export const Todos = () => {
     localStorage.setItem("todos", JSON.stringify(todos));
 
     return <>
-        <SortTodos setSortBy={setSortBy} sortBy={sortBy}/>
         <FilterTodos setFilter={setFilter} currentFilter={filter} />
         <ul className="grid grid-cols-5 gap-4">
-            {sortedTodos.map((t) => (
-                <TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>
+            {filteredTodos.map((t) => (
+                <TodoPresentation 
+                removeTodo={removeTodo} 
+                handleChange={handleChange} 
+                key={t.id} 
+                todo={t}
+                />
             ))}
         </ul>
         <AddTodo addTodo={(todo) => setTodos(prev => [...prev, todo])} />
