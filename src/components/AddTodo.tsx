@@ -14,8 +14,9 @@ export const AddTodo = ({addTodo}: AddTodoProps) => {
         
         const newTodo = new Todo(content, false, deadline)
         addTodo(newTodo);
-
         
+        setContent("");
+        setDeadline("")
     }
 
     return <>
