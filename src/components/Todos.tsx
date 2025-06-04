@@ -51,11 +51,19 @@ export const Todos = () => {
             <SortTodos setSortBy={setSortBy} sortBy={sortBy}/>
             <FilterTodos setFilter={setFilter} currentFilter={filter} />
         </div>
-        <ul className="grid grid-cols-5 gap-4">
-            {sortedTodos.map((t) => (
-                <TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>
-            ))}
-        </ul>
+        {sortedTodos.length === 0 ? (
+            <p>{filter === "all" 
+                ? "You have no todos" 
+                : filter === "active" 
+                ? "Great job! You finished all your todos"
+                : "You haven't completed any todos yet"}</p>
+            ) : (
+            <ul className="grid grid-cols-5 gap-4">
+                {sortedTodos.map((t) => (
+                    <TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>
+                ))}
+            </ul>
+        )}
         <AddTodo addTodo={(todo) => setTodos(prev => [...prev, todo])} />
     </>
 }
