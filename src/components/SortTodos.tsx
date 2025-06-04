@@ -9,7 +9,7 @@ export const SortTodos = ({sortBy, setSortBy}: SortTodosProps) => {
 
 
     return <>
-        <label className="flex justify-end mb-4">
+        <label className="flex justify-end mb-4 border border-gray-300 rounded p-1 shadow-sm">
             <span className="mr-3">Sort</span>
             <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortValue)}>
                 <option value="deadline">Deadline</option>

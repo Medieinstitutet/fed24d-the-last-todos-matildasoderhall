@@ -9,7 +9,7 @@ type FilterTodosProps = {
 
 export const FilterTodos = ({setFilter, currentFilter}: FilterTodosProps) => {
     return <>
-        <label className="flex justify-end mb-4">
+        <label className="flex justify-end mb-4 border border-gray-300 rounded p-1 shadow-sm">
             <span className="mr-3">Show</span>
             <select value={currentFilter} onChange={(e) => setFilter(e.target.value as Filter)}>
                 <option value="all">All</option>
