@@ -18,7 +18,7 @@ export const Todos = () => {
     
     const [todos, setTodos] = useState<Todo[]>( JSON.parse(localStorage.getItem("todos") || JSON.stringify(defaultTodos)));
 
-    const [filter, setFilter] = useState<Filter>("all");
+    const [filter, setFilter] = useState<Filter>("active");
 
     const [sortBy, setSortBy] = useState<SortValue>("alphabetical");
 
@@ -47,16 +47,13 @@ export const Todos = () => {
     localStorage.setItem("todos", JSON.stringify(todos));
 
     return <>
-        <SortTodos setSortBy={setSortBy} sortBy={sortBy}/>
-        <FilterTodos setFilter={setFilter} currentFilter={filter} />
+        <div className="flex justify-end gap-6">
+            <SortTodos setSortBy={setSortBy} sortBy={sortBy}/>
+            <FilterTodos setFilter={setFilter} currentFilter={filter} />
+        </div>
         <ul className="grid grid-cols-5 gap-4">
             {sortedTodos.map((t) => (
-                <TodoPresentation 
-                removeTodo={removeTodo} 
-                handleChange={handleChange} 
-                key={t.id} 
-                todo={t}
-                />
+                <TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>
             ))}
         </ul>
         <AddTodo addTodo={(todo) => setTodos(prev => [...prev, todo])} />
