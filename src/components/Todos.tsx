@@ -20,7 +20,7 @@ export const Todos = () => {
 
     const [filter, setFilter] = useState<Filter>("active");
 
-    const [sortBy, setSortBy] = useState<SortValue>("alphabetical");
+    const [sortBy, setSortBy] = useState<SortValue>("newest");
 
     const filteredTodos = todos.filter(todo => {
         if (filter === "active") return !todo.done;
@@ -31,6 +31,8 @@ export const Todos = () => {
     const sortedTodos = [...filteredTodos].sort((a, b) => {
         if (sortBy === "alphabetical") return a.content.localeCompare(b.content);
         if (sortBy === "deadline") return (a.deadline ?? "").localeCompare(b.deadline ?? "");
+        if (sortBy === "newest") return new Date(b.created).getTime() -  new Date(a.created).getTime();
+        if (sortBy === "oldest") return new Date(a.created).getTime() -  new Date(b.created).getTime();
         return 0;
     });
 

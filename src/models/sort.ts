@@ -1,1 +1,1 @@
-export type SortValue = "deadline" | "alphabetical";
+export type SortValue = "deadline" | "alphabetical" | "newest" | "oldest";
