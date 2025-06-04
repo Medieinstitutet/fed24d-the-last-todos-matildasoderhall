@@ -60,7 +60,7 @@ export const Todos = () => {
                 ? "Great job! You finished all your todos"
                 : "You haven't completed any todos yet"}</p>
             ) : (
-            <ul className="grid grid-cols-5 gap-4">
+            <ul className="grid md:grid-cols-3 xl:grid-cols-5 gap-4">
                 {sortedTodos.map((t) => (
                     <TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>
                 ))}
