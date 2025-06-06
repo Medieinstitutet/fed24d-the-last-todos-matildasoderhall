@@ -20,7 +20,7 @@ export const Todos = () => {
 
     const [filter, setFilter] = useState<Filter>("active");
 
-    const [sortBy, setSortBy] = useState<SortValue>("alphabetical");
+    const [sortBy, setSortBy] = useState<SortValue>("newest");
 
     const filteredTodos = todos.filter(todo => {
         if (filter === "active") return !todo.done;
@@ -31,6 +31,8 @@ export const Todos = () => {
     const sortedTodos = [...filteredTodos].sort((a, b) => {
         if (sortBy === "alphabetical") return a.content.localeCompare(b.content);
         if (sortBy === "deadline") return (a.deadline ?? "").localeCompare(b.deadline ?? "");
+        if (sortBy === "newest") return new Date(b.created).getTime() -  new Date(a.created).getTime();
+        if (sortBy === "oldest") return new Date(a.created).getTime() -  new Date(b.created).getTime();
         return 0;
     });
 
@@ -51,11 +53,19 @@ export const Todos = () => {
             <SortTodos setSortBy={setSortBy} sortBy={sortBy}/>
             <FilterTodos setFilter={setFilter} currentFilter={filter} />
         </div>
-        <ul className="grid grid-cols-5 gap-4">
-            {sortedTodos.map((t) => (
-                <TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>
-            ))}
-        </ul>
+        {sortedTodos.length === 0 ? (
+            <p>{filter === "all" 
+                ? "You have no todos" 
+                : filter === "active" 
+                ? "Great job! You finished all your todos"
+                : "You haven't completed any todos yet"}</p>
+            ) : (
+            <ul className="grid md:grid-cols-3 xl:grid-cols-5 gap-4">
+                {sortedTodos.map((t) => (
+                    <TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>
+                ))}
+            </ul>
+        )}
         <AddTodo addTodo={(todo) => setTodos(prev => [...prev, todo])} />
     </>
 }
