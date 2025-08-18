@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useReducer, useState } from "react"
 import { Todo } from "../models/todo"
 import { TodoPresentation } from "./TodoPresentation"
 import { FilterTodos } from "./FilterTodos";
@@ -6,6 +6,7 @@ import type { Filter } from "../models/filter";
 import { AddTodo } from "./AddTodo";
 import { SortTodos } from "./SortTodos";
 import type { SortValue } from "../models/sort";
+import { TodosReducer } from "../reducers/TodosReducer";
   
 export const Todos = () => {
     const defaultTodos = [
@@ -16,7 +17,11 @@ export const Todos = () => {
         new Todo("Book trip"),
     ]
     
-    const [todos, setTodos] = useState<Todo[]>( JSON.parse(localStorage.getItem("todos") || JSON.stringify(defaultTodos)));
+    // const [todos, setTodos] = useState<Todo[]>( JSON.parse(localStorage.getItem("todos") || JSON.stringify(defaultTodos)));
+
+    const initialTodos: Todo[] = JSON.parse(localStorage.getItem("todos") || JSON.stringify(defaultTodos))
+
+    const [todos, dispatch] = useReducer(TodosReducer, initialTodos)
 
     const [filter, setFilter] = useState<Filter>("active");
 
@@ -36,15 +41,15 @@ export const Todos = () => {
         return 0;
     });
 
-    const handleChange = (updated: Todo) => {
-        setTodos(prev =>
-            prev.map(todo => todo.id === updated.id ? updated : todo)
-        );
-    };
+    // const handleChange = (updated: Todo) => {
+    //     setTodos(prev =>
+    //         prev.map(todo => todo.id === updated.id ? updated : todo)
+    //     );
+    // };
 
-    const removeTodo = (id: number) => {
-        setTodos(todos.filter((t) => t.id !== id));
-    };
+    // const removeTodo = (id: number) => {
+    //     setTodos(todos.filter((t) => t.id !== id));
+    // };
 
     localStorage.setItem("todos", JSON.stringify(todos));
 
@@ -62,10 +67,10 @@ export const Todos = () => {
             ) : (
             <ul className="grid md:grid-cols-3 xl:grid-cols-5 gap-4">
                 {sortedTodos.map((t) => (
-                    <TodoPresentation removeTodo={removeTodo} handleChange={handleChange} key={t.id} todo={t}/>
+                    <TodoPresentation removeTodo={(id) => dispatch({ type: "REMOVED", payload: id})} handleChange={(todo) => dispatch({ type: "TOGGLED", payload: todo.id})} key={t.id} todo={t}/>
                 ))}
             </ul>
         )}
-        <AddTodo addTodo={(todo) => setTodos(prev => [...prev, todo])} />
+        <AddTodo addTodo={(todo) => dispatch({ type: "ADDED", payload: todo})} />
     </>
 }
